@@ -1,5 +1,6 @@
 const express = require("express")
 const { createTodo } = require("./types")
+const { updateTodo } = require("./types")
 const { todo } = require("./db")
 const cors = require("cors")
 
@@ -21,7 +22,7 @@ app.post('/todo', async function(req, res){
    await todo.create({
     title: createPayload.title,
     description: createPayload.description,
-    ccompleted: false
+    completed: false
   })
 })
 
@@ -42,11 +43,12 @@ app.put('/completed', async function(req, res){
     return
 
  }
- await todo.update({
+ await todo.updateOne({
   _id: req.body._id
  }, {
   completed: true
- })
+ 
+})
  res.json({
   msg: "Todo marked as completed"
  })
